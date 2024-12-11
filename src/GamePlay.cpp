@@ -23,13 +23,13 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-    m_context->m_assets->AddTexture(GRASS, "assets/textures/grass.png", true);
+    //m_context->m_assets->AddTexture(GRASS, "assets/textures/grass.png", true);
     m_context->m_assets->AddTexture(FOOD, "assets/textures/food.png");
     m_context->m_assets->AddTexture(WALL, "assets/textures/wall.png", true);
     m_context->m_assets->AddTexture(SNAKE, "assets/textures/snake.png");
 
-    m_grass.setTexture(m_context->m_assets->GetTexture(GRASS));
-    m_grass.setTextureRect(m_context->m_window->getViewport(m_context->m_window->getDefaultView()));
+    //m_grass.setTexture(m_context->m_assets->GetTexture(GRASS));
+    //m_grass.setTextureRect(m_context->m_window->getViewport(m_context->m_window->getDefaultView()));
 
     for (auto &wall : m_walls)
     {
@@ -66,28 +66,48 @@ void GamePlay::ProcessInput()
         else if (event.type == sf::Event::KeyPressed)
         {
             sf::Vector2f newDirection = m_snakeDirection;
-            switch (event.key.code)
-            {
-            case sf::Keyboard::Up:
-                newDirection = {0.f, -16.f};
-                break;
-            case sf::Keyboard::Down:
-                newDirection = {0.f, 16.f};
-                break;
-            case sf::Keyboard::Left:
-                newDirection = {-16.f, 0.f};
-                break;
-            case sf::Keyboard::Right:
-                newDirection = {16.f, 0.f};
-                break;
-            case sf::Keyboard::Escape:
-                m_context->m_states->Add(std::make_unique<PauseGame>(m_context));
-                break;
 
-            default:
-                break;
+            bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+            bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+            bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+            bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+
+            // Movimiento diagonal
+            if (up && left)
+            {
+                newDirection = {-16.f, -16.f};
+            }
+            else if (up && right)
+            {
+                newDirection = {16.f, -16.f};
+            }
+            else if (down && left)
+            {
+                newDirection = {-16.f, 16.f};
+            }
+            else if (down && right)
+            {
+                newDirection = {16.f, 16.f};
+            }
+            // Movimiento normal
+            else if (up)
+            {
+                newDirection = {0.f, -16.f};
+            }
+            else if (down)
+            {
+                newDirection = {0.f, 16.f};
+            }
+            else if (left)
+            {
+                newDirection = {-16.f, 0.f};
+            }
+            else if (right)
+            {
+                newDirection = {16.f, 0.f};
             }
 
+            // Validar que la dirección no sea opuesta a la actual
             if (std::abs(m_snakeDirection.x) != std::abs(newDirection.x) ||
                 std::abs(m_snakeDirection.y) != std::abs(newDirection.y))
             {
@@ -96,6 +116,8 @@ void GamePlay::ProcessInput()
         }
     }
 }
+
+
 
 void GamePlay::Update(const sf::Time &deltaTime)
 {

@@ -22,8 +22,8 @@ void MainMenu::Init()
     m_context->m_assets->AddFont(MAIN_FONT, "assets/fonts/Barriecito-Regular.ttf");
 
     // Configurar sonido
-    if (!m_clickSoundBuffer.loadFromFile("assets/sounds/button_press.ogg")) {
-        std::cerr << "Error: No se pudo cargar el sonido button_press.ogg\n";
+    if (!m_clickSoundBuffer.loadFromFile("assets/sounds/botton_press.ogg")) {
+        std::cerr << "Error: No se pudo cargar el sonido botton_press.ogg\n";
         exit(EXIT_FAILURE);
     }
     m_clickSound.setBuffer(m_clickSoundBuffer);

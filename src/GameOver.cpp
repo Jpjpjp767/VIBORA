@@ -2,6 +2,8 @@
 #include "GamePlay.hpp"
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
 
 GameOver::GameOver(std::shared_ptr<Context> &context)
     : m_context(context), m_isRetryButtonSelected(true),
@@ -15,14 +17,24 @@ GameOver::~GameOver()
 }
 
 void GameOver::Init()
-{
+{ 
+
+    // Configurar sonido
+    if (!m_clickSoundBufferOver.loadFromFile("assets/sounds/botton_press.ogg")) {
+        std::cerr << "Error Game over: No se pudo cargar el sonido botton_press.ogg\n";
+        exit(EXIT_FAILURE);
+    }
+    m_clickSoundOver.setBuffer(m_clickSoundBufferOver);
+
     // Title
     m_gameOverTitle.setFont(m_context->m_assets->GetFont(MAIN_FONT));
     m_gameOverTitle.setString("Game Over");
     m_gameOverTitle.setOrigin(m_gameOverTitle.getLocalBounds().width / 2,
                               m_gameOverTitle.getLocalBounds().height / 2);
-    m_gameOverTitle.setPosition(m_context->m_window->getSize().x / 2,
-                                m_context->m_window->getSize().y / 2 - 150.f);
+    m_gameOverTitle.setPosition(m_context->m_window->getSize().x / 2 - 25,
+                                m_context->m_window->getSize().y / 2 - 75.f);
+    m_gameOverTitle.setCharacterSize(40);
+    m_gameOverTitle.setFillColor(sf::Color::Black);
 
     // Play Button
     m_retryButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -30,8 +42,8 @@ void GameOver::Init()
     m_retryButton.setOrigin(m_retryButton.getLocalBounds().width / 2,
                             m_retryButton.getLocalBounds().height / 2);
     m_retryButton.setPosition(m_context->m_window->getSize().x / 2,
-                              m_context->m_window->getSize().y / 2 - 25.f);
-    m_retryButton.setCharacterSize(20);
+                              m_context->m_window->getSize().y / 2);
+    m_retryButton.setCharacterSize(28);
 
     // Exit Button
     m_exitButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -40,7 +52,7 @@ void GameOver::Init()
                            m_exitButton.getLocalBounds().height / 2);
     m_exitButton.setPosition(m_context->m_window->getSize().x / 2,
                              m_context->m_window->getSize().y / 2 + 25.f);
-    m_exitButton.setCharacterSize(20);
+    m_exitButton.setCharacterSize(28);
 }
 
 void GameOver::ProcessInput()
@@ -62,6 +74,7 @@ void GameOver::ProcessInput()
                 {
                     m_isRetryButtonSelected = true;
                     m_isExitButtonSelected = false;
+                    m_clickSoundOver.play();
                 }
                 break;
             }
@@ -71,6 +84,7 @@ void GameOver::ProcessInput()
                 {
                     m_isRetryButtonSelected = false;
                     m_isExitButtonSelected = true;
+                    m_clickSoundOver.play();
                 }
                 break;
             }
@@ -87,6 +101,7 @@ void GameOver::ProcessInput()
                 {
                     m_isExitButtonPressed = true;
                 }
+                m_clickSoundOver.play();
 
                 break;
             }
@@ -124,7 +139,7 @@ void GameOver::Update(const sf::Time &deltaTime)
 
 void GameOver::Draw()
 {
-    m_context->m_window->clear(sf::Color::Blue);
+    m_context->m_window->clear(sf::Color::White);
     m_context->m_window->draw(m_gameOverTitle);
     m_context->m_window->draw(m_retryButton);
     m_context->m_window->draw(m_exitButton);

@@ -3,6 +3,8 @@
 #include <memory>
 
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio.hpp>
+
 
 #include "State.hpp"
 #include "Game.hpp"
@@ -29,4 +31,7 @@ private:
 
     bool m_isExitButtonSelected;
     bool m_isExitButtonPressed;
+
+    sf::SoundBuffer m_clickSoundBufferOver; // Buffer para cargar el sonido
+    sf::Sound m_clickSoundOver;  
 };
