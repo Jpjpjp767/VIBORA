@@ -2,6 +2,9 @@
 #include "GamePlay.hpp"
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+
 
 MainMenu::MainMenu(std::shared_ptr<Context> &context)
     : m_context(context), m_isPlayButtonSelected(true),
@@ -16,15 +19,24 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-    m_context->m_assets->AddFont(MAIN_FONT, "assets/fonts/Pacifico-Regular.ttf");
+    m_context->m_assets->AddFont(MAIN_FONT, "assets/fonts/Barriecito-Regular.ttf");
+
+    // Configurar sonido
+    if (!m_clickSoundBuffer.loadFromFile("assets/sounds/button_press.ogg")) {
+        std::cerr << "Error: No se pudo cargar el sonido button_press.ogg\n";
+        exit(EXIT_FAILURE);
+    }
+    m_clickSound.setBuffer(m_clickSoundBuffer);
 
     // Title
     m_gameTitle.setFont(m_context->m_assets->GetFont(MAIN_FONT));
     m_gameTitle.setString("Snake Game");
     m_gameTitle.setOrigin(m_gameTitle.getLocalBounds().width / 2,
                           m_gameTitle.getLocalBounds().height / 2);
-    m_gameTitle.setPosition(m_context->m_window->getSize().x / 2,
-                            m_context->m_window->getSize().y / 2 - 150.f);
+    m_gameTitle.setPosition(m_context->m_window->getSize().x / 2 - 25,
+                            m_context->m_window->getSize().y / 2 - 75.f);
+    m_gameTitle.setCharacterSize(40);
+    m_gameTitle.setFillColor(sf::Color::Black);
 
     // Play Button
     m_playButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -32,8 +44,8 @@ void MainMenu::Init()
     m_playButton.setOrigin(m_playButton.getLocalBounds().width / 2,
                            m_playButton.getLocalBounds().height / 2);
     m_playButton.setPosition(m_context->m_window->getSize().x / 2,
-                             m_context->m_window->getSize().y / 2 - 25.f);
-    m_playButton.setCharacterSize(20);
+                             m_context->m_window->getSize().y / 2);
+    m_playButton.setCharacterSize(28);
 
     // Exit Button
     m_exitButton.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -42,7 +54,7 @@ void MainMenu::Init()
                            m_exitButton.getLocalBounds().height / 2);
     m_exitButton.setPosition(m_context->m_window->getSize().x / 2,
                              m_context->m_window->getSize().y / 2 + 25.f);
-    m_exitButton.setCharacterSize(20);
+    m_exitButton.setCharacterSize(28);
 }
 
 void MainMenu::ProcessInput()
@@ -65,6 +77,7 @@ void MainMenu::ProcessInput()
                 {
                     m_isPlayButtonSelected = true;
                     m_isExitButtonSelected = false;
+                    m_clickSound.play();
                 }
                 break;
             }
@@ -74,6 +87,7 @@ void MainMenu::ProcessInput()
                 {
                     m_isPlayButtonSelected = false;
                     m_isExitButtonSelected = true;
+                    m_clickSound.play();
                 }
                 break;
             }
@@ -90,6 +104,7 @@ void MainMenu::ProcessInput()
                 {
                     m_isExitButtonPressed = true;
                 }
+                m_clickSound.play();
 
                 break;
             }
@@ -127,7 +142,7 @@ void MainMenu::Update(const sf::Time &deltaTime)
 
 void MainMenu::Draw()
 {
-    m_context->m_window->clear(sf::Color::Blue);
+    m_context->m_window->clear(sf::Color::White);
     m_context->m_window->draw(m_gameTitle);
     m_context->m_window->draw(m_playButton);
     m_context->m_window->draw(m_exitButton);

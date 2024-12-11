@@ -3,6 +3,7 @@
 #include <memory>
 
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio.hpp>
 
 #include "State.hpp"
 #include "Game.hpp"
@@ -20,6 +21,9 @@ private:
 
     bool m_isExitButtonSelected;
     bool m_isExitButtonPressed;
+
+    sf::SoundBuffer m_clickSoundBuffer; // Almacena los datos del sonido
+    sf::Sound m_clickSound;
 
 public:
     MainMenu(std::shared_ptr<Context> &context);
