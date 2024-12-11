@@ -3,6 +3,7 @@
 #include "PauseGame.hpp"
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Audio.hpp>
 
 #include <stdlib.h>
 #include <time.h>
@@ -23,13 +24,9 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-    //m_context->m_assets->AddTexture(GRASS, "assets/textures/grass.png", true);
     m_context->m_assets->AddTexture(FOOD, "assets/textures/food.png");
     m_context->m_assets->AddTexture(WALL, "assets/textures/wall.png", true);
     m_context->m_assets->AddTexture(SNAKE, "assets/textures/snake.png");
-
-    //m_grass.setTexture(m_context->m_assets->GetTexture(GRASS));
-    //m_grass.setTextureRect(m_context->m_window->getViewport(m_context->m_window->getDefaultView()));
 
     for (auto &wall : m_walls)
     {
@@ -52,6 +49,8 @@ void GamePlay::Init()
     m_scoreText.setFont(m_context->m_assets->GetFont(MAIN_FONT));
     m_scoreText.setString("Score : " + std::to_string(m_score));
     m_scoreText.setCharacterSize(15);
+    
+    
 }
 
 void GamePlay::ProcessInput()
@@ -131,6 +130,8 @@ void GamePlay::Update(const sf::Time &deltaTime)
             {
                 if (m_snake.IsOn(wall))
                 {
+                    m_snake.PlayCollisionSound();
+
                     m_context->m_states->Add(std::make_unique<GameOver>(m_context), true);
                     break;
                 }
@@ -139,6 +140,8 @@ void GamePlay::Update(const sf::Time &deltaTime)
             if (m_snake.IsOn(m_food))
             {
                 m_snake.Grow(m_snakeDirection);
+
+                m_snake.PlayEatSound();
 
                 int x = 0, y = 0;
                 x = std::clamp<int>(rand() % m_context->m_window->getSize().x, 16, m_context->m_window->getSize().x - 2 * 16);

@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Audio.hpp>
 
 class Snake : public sf::Drawable
 {
@@ -19,6 +20,8 @@ public:
     bool IsOn(const sf::Sprite &other) const;
     void Grow(const sf::Vector2f &direction);
     bool IsSelfIntersecting() const;
+    void PlayCollisionSound();
+    void PlayEatSound();
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
@@ -26,4 +29,8 @@ private:
     std::list<sf::Sprite> m_body;
     std::list<sf::Sprite>::iterator m_head;
     std::list<sf::Sprite>::iterator m_tail;
+    sf::SoundBuffer m_collisionSoundBuffer;
+    sf::Sound m_collisionSound;
+    sf::SoundBuffer m_eatSoundBuffer;
+    sf::Sound m_eatSound;
 };
