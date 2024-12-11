@@ -125,7 +125,7 @@ void GamePlay::Update(const sf::Time &deltaTime)
     {
         m_elapsedTime += deltaTime;
 
-        if (m_elapsedTime.asSeconds() > 0.1)
+        if (m_elapsedTime.asSeconds() > 0.2)
         {
             for (auto &wall : m_walls)
             {
