@@ -70,6 +70,7 @@ void GamePlay::ProcessInput()
             bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
             bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
             bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+            bool escape = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
 
             // Movimiento diagonal
             if (up && left)
@@ -105,6 +106,11 @@ void GamePlay::ProcessInput()
             {
                 newDirection = {16.f, 0.f};
             }
+            else if (escape)
+            {
+                m_context->m_states->Add(std::make_unique<PauseGame>(m_context));
+            }
+            
 
             // Validar que la dirección no sea opuesta a la actual
             if (std::abs(m_snakeDirection.x) != std::abs(newDirection.x) ||

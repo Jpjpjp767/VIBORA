@@ -3,6 +3,7 @@
 #include <memory>
 
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Audio.hpp>
 
 #include "State.hpp"
 #include "Game.hpp"
@@ -21,4 +22,6 @@ public:
 private:
     std::shared_ptr<Context> m_context;
     sf::Text m_pauseTitle;
+    sf::SoundBuffer m_eatSoundBuffer;
+    sf::Sound m_eatSound;
 };
