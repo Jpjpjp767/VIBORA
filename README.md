@@ -4,45 +4,43 @@
 
 ## Introduction
 
-El Snake (a veces también llamado La serpiente o La viborita) es un videojuego lanzado a mediados de la década de 1970 que ha mantenido su popularidad desde entonces, convirtiéndose en un clásico. En 1998, el Snake obtuvo una audiencia masiva tras convertirse en un juego estándar pregrabado en los teléfonos Nokia.
+Snake (sometimes also called The Snake or The Viborita) is a video game released in the mid-1970s that has maintained its popularity ever since, becoming a classic. In 1998, Snake gained a mass audience after becoming a standard pre-recorded game on Nokia phones.
 
-Snake es un juego donde tienes el control de una serpiente y tienes que llegar a la comida para crecer sin chocar con las paredes de la pantalla del juego o contra si misma, sin embargo, la serpiente no se va a parar y entre mas comes mas grande es, el fin del juego es comer lo mas que se pueda sin morir en el intento.
+Snake is a game where you have control of a snake and you have to reach the food to grow without colliding with the walls of the game screen or against itself, however, the snake is not going to stop and the more it comes, the more great is, the end of the game is to eat as much as you can without dying trying.
 
-## Controles
+## Controls
 
-- Arriba: La serpiente se mueve hacia arriba.
-- Abajo: La serpiente se mueve hacia abajo. 
-- Izquierda: La serpiente se mueve hacia la izquierda.
-- Derecha: La serpiente se mueve hacia derecha.
-- Escape: El juego se pausa.
+- Up: The snake moves upward.
+- Down: The snake moves downwards. 
+- Left: The snake moves to the left.
+- Right: The snake moves to the right.
+- Escape: The game is paused.
 
-*La serpiente no se puede mover hacia lados contrarios. Por ejemplo, si va a la derecha no puede ir a la izquierda y si va hacia abajo no puede ir hacia arriba.*
+*The snake cannot move in opposite directions. For example, if you go to the right you cannot go left and if you go down you cannot go up.*
 
-### Para ir en diagonal
+### To go diagonally
 
-- Arriba y derecha: Va en diagonal hacia arriba y derecha.
-- Arriba e izquierda: Va en diagonal hacia arriba y izquierda.
-- Abajo y derecha: Va en diagonal hacia abajo y derecha.
-- Abajo e izquierda: Va en diagonal hacia abajo y izquierda.
+- Up and right: Goes diagonally up and right.
+- Up and left: It goes diagonally up and left.
+- Down and right: It goes diagonally down and right.
+- Down and left: It goes diagonally down and left.
 
-## Compilar
+## Compile
 
-Para compilar tenemos dos pasos y uno estra para limpiar el archivo binario:
+To compile we have two steps and one is to clean the binary file:
 
-1. Pirmero inserte el comando:
+1. First insert the command:
 
 ~~~
 make
 ~~~
 
-2. Despues ejecute:
+2. Then execute:
 ~~~
 make run
 ~~~
 
-### Limpiar el archivo binario:
+### Clean the binary file:
 ~~~
 make clean
 ~~~
-
-

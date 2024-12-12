@@ -22,6 +22,7 @@ void PauseGame::Init()
                              m_context->m_window->getSize().y / 2);
 }
 
+
 void PauseGame::ProcessInput()
 {
     sf::Event event;
